@@ -11,13 +11,10 @@ app.use(express.json())
 app.use(logger);
 app.use(router)
 
-
 app.get('/', (req: Request, res: Response) => {
     // throw new Error("server is dying")
     res.send("Hello World")
 })
-
-
 
 app.use(globalError);
 

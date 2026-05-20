@@ -1,13 +1,11 @@
 import { Router } from "express";
-import { sign } from "node:crypto";
-import { signUp } from "../controllers/auth.controller";
+import { login, signUp } from "../controllers/auth.controller";
 
 
 
 const router = Router()
 
-
-router.post('/login', () => {})
+router.post('/login', login)
 router.post('/signup', signUp)
 router.get('/me', () => {})
 
