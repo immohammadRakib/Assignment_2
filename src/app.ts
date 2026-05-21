@@ -1,22 +1,22 @@
 import express, { type Application, type Request, type Response } from "express"
 import { logger } from "./middleware/logger"
 import { globalError } from "./middleware/globalError";
-import router from "./api/router/auth.route";
+import rootRouter from "./api/router"; 
 
 const app: Application = express()
 
-
+// Global Middlewares
 app.use(express.json())
-
 app.use(logger);
-app.use(router)
+
+// Base API Route Setup
+app.use("/api", rootRouter); 
 
 app.get('/', (req: Request, res: Response) => {
-    // throw new Error("server is dying")
     res.send("Hello World")
 })
 
+// Global Error Handler
 app.use(globalError);
-
 
 export default app;
