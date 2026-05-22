@@ -96,7 +96,14 @@ class IssueService {
       WHERE id = $5
       RETURNING *
     `;
-    const res = await pool.query(query, [title, description, type, status, id]);
+    // const res = await pool.query(query, [title, description, type, status, id]);
+    const res = await pool.query(query, [
+      title !== undefined ? title : null,
+      description !== undefined ? description : null,
+      type !== undefined ? type : null,
+      status !== undefined ? status : null,
+      id
+    ]);
     return res.rows[0];
   }
 

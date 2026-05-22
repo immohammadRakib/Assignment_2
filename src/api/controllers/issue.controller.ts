@@ -63,6 +63,7 @@ export const updateIssue = async (req: Request, res: Response) => {
   try {
     const issueId = Number(req.params.id);
     const existingIssue = await issueService.getIssueById(issueId);
+    
 
     if (!existingIssue) {
       return res.status(404).json({ success: false, message: "Issue not found" });
