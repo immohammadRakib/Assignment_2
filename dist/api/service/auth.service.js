@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { pool } from "../../db";
 class AuthService {
     async createUser(userData) {

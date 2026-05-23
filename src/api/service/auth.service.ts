@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import type { User } from "../../types";
 import { pool } from "../../db";
 
