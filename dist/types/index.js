@@ -1,2 +1,5 @@
-export const roles = ["contributor", "maintainer"];
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.roles = void 0;
+exports.roles = ["contributor", "maintainer"];
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,6 @@
-import { pool } from "../../db";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const db_1 = require("../../db");
 class IssueService {
     async createIssue(issueData) {
         const { title, description, type, reporter_id } = issueData;
@@ -7,7 +9,7 @@ class IssueService {
       VALUES ($1, $2, $3, $4)
       RETURNING *
     `;
-        const res = await pool.query(query, [title, description, type, reporter_id]);
+        const res = await db_1.pool.query(query, [title, description, type, reporter_id]);
         return res.rows[0];
     }
     async getAllIssues(filters) {
@@ -30,13 +32,13 @@ class IssueService {
         else {
             query += ` ORDER BY created_at DESC`;
         }
-        const issueRes = await pool.query(query, queryParams);
+        const issueRes = await db_1.pool.query(query, queryParams);
         const issues = issueRes.rows;
         if (issues.length === 0)
             return [];
         const reporterIds = [...new Set(issues.map((i) => i.reporter_id))];
         const userQuery = `SELECT id, name, role FROM users WHERE id = ANY($1)`;
-        const userRes = await pool.query(userQuery, [reporterIds]);
+        const userRes = await db_1.pool.query(userQuery, [reporterIds]);
         const userMap = userRes.rows.reduce((map, user) => {
             map[user.id] = user;
             return map;
@@ -50,11 +52,11 @@ class IssueService {
         });
     }
     async getIssueById(id) {
-        const issueRes = await pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
+        const issueRes = await db_1.pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
         const issue = issueRes.rows[0];
         if (!issue)
             return null;
-        const userRes = await pool.query(`SELECT id, name, role FROM users WHERE id = $1`, [issue.reporter_id]);
+        const userRes = await db_1.pool.query(`SELECT id, name, role FROM users WHERE id = $1`, [issue.reporter_id]);
         const { reporter_id, ...issueData } = issue;
         return {
             ...issueData,
@@ -74,7 +76,7 @@ class IssueService {
       RETURNING *
     `;
         // const res = await pool.query(query, [title, description, type, status, id]);
-        const res = await pool.query(query, [
+        const res = await db_1.pool.query(query, [
             title !== undefined ? title : null,
             description !== undefined ? description : null,
             type !== undefined ? type : null,
@@ -84,9 +86,9 @@ class IssueService {
         return res.rows[0];
     }
     async deleteIssue(id) {
-        const res = await pool.query(`DELETE FROM issues WHERE id = $1 RETURNING id`, [id]);
+        const res = await db_1.pool.query(`DELETE FROM issues WHERE id = $1 RETURNING id`, [id]);
         return res.rowCount && res.rowCount > 0;
     }
 }
-export default new IssueService();
+exports.default = new IssueService();
 //# sourceMappingURL=issue.service.js.map

@@ -1,6 +1,12 @@
-import issueService from "../service/issue.service";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteIssue = exports.updateIssue = exports.getSingleIssue = exports.getAllIssues = exports.createIssue = void 0;
+const issue_service_1 = __importDefault(require("../service/issue.service"));
 // Create Issue
-export const createIssue = async (req, res) => {
+const createIssue = async (req, res) => {
     try {
         const { title, description, type } = req.body;
         if (title.length > 150) {
@@ -9,7 +15,7 @@ export const createIssue = async (req, res) => {
         if (description.length < 20) {
             return res.status(400).json({ success: false, message: "Description minimum 20 characters" });
         }
-        const issue = await issueService.createIssue({
+        const issue = await issue_service_1.default.createIssue({
             title,
             description,
             type,
@@ -25,11 +31,12 @@ export const createIssue = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to create issue", errors: error.message });
     }
 };
+exports.createIssue = createIssue;
 // Get All Issue
-export const getAllIssues = async (req, res) => {
+const getAllIssues = async (req, res) => {
     try {
         const { sort, type, status } = req.query;
-        const issues = await issueService.getAllIssues({
+        const issues = await issue_service_1.default.getAllIssues({
             sort: sort,
             type: type,
             status: status
@@ -40,10 +47,11 @@ export const getAllIssues = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to get issues", errors: error.message });
     }
 };
+exports.getAllIssues = getAllIssues;
 // Get Issue by ID
-export const getSingleIssue = async (req, res) => {
+const getSingleIssue = async (req, res) => {
     try {
-        const issue = await issueService.getIssueById(Number(req.params.id));
+        const issue = await issue_service_1.default.getIssueById(Number(req.params.id));
         if (!issue) {
             return res.status(404).json({ success: false, message: "Issue not found" });
         }
@@ -53,11 +61,12 @@ export const getSingleIssue = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to get issue", errors: error.message });
     }
 };
+exports.getSingleIssue = getSingleIssue;
 // Update Issue
-export const updateIssue = async (req, res) => {
+const updateIssue = async (req, res) => {
     try {
         const issueId = Number(req.params.id);
-        const existingIssue = await issueService.getIssueById(issueId);
+        const existingIssue = await issue_service_1.default.getIssueById(issueId);
         if (!existingIssue) {
             return res.status(404).json({ success: false, message: "Issue not found" });
         }
@@ -71,7 +80,7 @@ export const updateIssue = async (req, res) => {
             }
             delete req.body.status;
         }
-        const updatedIssue = await issueService.updateIssue(issueId, req.body);
+        const updatedIssue = await issue_service_1.default.updateIssue(issueId, req.body);
         return res.status(200).json({
             success: true,
             message: "Issue updated successfully",
@@ -82,10 +91,11 @@ export const updateIssue = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to update issue", errors: error.message });
     }
 };
+exports.updateIssue = updateIssue;
 // Delete Issue
-export const deleteIssue = async (req, res) => {
+const deleteIssue = async (req, res) => {
     try {
-        const isDeleted = await issueService.deleteIssue(Number(req.params.id));
+        const isDeleted = await issue_service_1.default.deleteIssue(Number(req.params.id));
         if (!isDeleted) {
             return res.status(404).json({ success: false, message: "Issue not found" });
         }
@@ -95,4 +105,5 @@ export const deleteIssue = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to delete issue", errors: error.message });
     }
 };
+exports.deleteIssue = deleteIssue;
 //# sourceMappingURL=issue.controller.js.map

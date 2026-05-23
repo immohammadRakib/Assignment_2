@@ -1,4 +1,7 @@
-export function sendResponse(res, { message, data, error }, status = 200) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendResponse = sendResponse;
+function sendResponse(res, { message, data, error }, status = 200) {
     res.status(status).json({
         success: error ? false : true,
         message: message,

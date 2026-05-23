@@ -5,4 +5,3 @@ declare const config: {
     jwt_secret: string;
 };
 export default config;
-//# sourceMappingURL=index.d.ts.map

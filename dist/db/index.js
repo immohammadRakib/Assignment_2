@@ -1,11 +1,17 @@
-import { Pool } from "pg";
-import config from "../config";
-export const pool = new Pool({
-    connectionString: config.database_url,
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.initDB = exports.pool = void 0;
+const pg_1 = require("pg");
+const config_1 = __importDefault(require("../config"));
+exports.pool = new pg_1.Pool({
+    connectionString: config_1.default.database_url,
 });
-export const initDB = async () => {
+const initDB = async () => {
     try {
-        await pool.query(`
+        await exports.pool.query(`
        CREATE TABLE IF NOT EXISTS users (
           id SERIAL PRIMARY KEY,
           name VARCHAR(150) NOT NULL,
@@ -16,7 +22,7 @@ export const initDB = async () => {
           updated_at TIMESTAMP NOT NULL DEFAULT NOW()
        );
     `);
-        await pool.query(`
+        await exports.pool.query(`
        CREATE TABLE IF NOT EXISTS issues (
           id SERIAL PRIMARY KEY,
           title VARCHAR(150) NOT NULL,
@@ -35,4 +41,5 @@ export const initDB = async () => {
         process.exit(1);
     }
 };
+exports.initDB = initDB;
 //# sourceMappingURL=index.js.map

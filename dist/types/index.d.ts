@@ -19,4 +19,3 @@ export type Issue = {
     created_at: Date;
     updated_at: Date;
 };
-//# sourceMappingURL=index.d.ts.map

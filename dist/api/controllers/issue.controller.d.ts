@@ -4,4 +4,3 @@ export declare const getAllIssues: (req: Request, res: Response) => Promise<Resp
 export declare const getSingleIssue: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 export declare const updateIssue: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 export declare const deleteIssue: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
-//# sourceMappingURL=issue.controller.d.ts.map

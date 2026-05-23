@@ -4,4 +4,3 @@ export declare function sendResponse<T>(res: Response, { message, data, error }:
     data?: T;
     error?: boolean;
 }, status?: number): void;
-//# sourceMappingURL=sendResponse.d.ts.map

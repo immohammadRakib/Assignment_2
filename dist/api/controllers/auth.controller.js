@@ -1,10 +1,16 @@
-import authService from "../service/auth.service";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import config from "../../config";
-export const signUp = async (req, res) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.login = exports.signUp = void 0;
+const auth_service_1 = __importDefault(require("../service/auth.service"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const config_1 = __importDefault(require("../../config"));
+const signUp = async (req, res) => {
     try {
-        const user = await authService.createUser(req.body);
+        const user = await auth_service_1.default.createUser(req.body);
         return res.status(201).json({
             success: true,
             message: "User registered successfully",
@@ -19,18 +25,19 @@ export const signUp = async (req, res) => {
         });
     }
 };
-export const login = async (req, res) => {
+exports.signUp = signUp;
+const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await authService.getUserByEmail(email);
+        const user = await auth_service_1.default.getUserByEmail(email);
         if (!user) {
             return res.status(401).json({ success: false, message: "Invalid credentials" });
         }
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcryptjs_1.default.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ success: false, message: "Invalid credentials" });
         }
-        const token = jwt.sign({ id: user.id, name: user.name, role: user.role }, config.jwt_secret || "secret", { expiresIn: "1d" });
+        const token = jsonwebtoken_1.default.sign({ id: user.id, name: user.name, role: user.role }, config_1.default.jwt_secret || "secret", { expiresIn: "1d" });
         delete user.password;
         // Standard Success Response (200 OK)
         return res.status(200).json({
@@ -50,4 +57,5 @@ export const login = async (req, res) => {
         });
     }
 };
+exports.login = login;
 //# sourceMappingURL=auth.controller.js.map

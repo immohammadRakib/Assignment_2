@@ -8,8 +8,7 @@ declare class IssueService {
     }): Promise<any[]>;
     getIssueById(id: number): Promise<any>;
     updateIssue(id: number, updateData: Partial<Issue>): Promise<any>;
-    deleteIssue(id: number): Promise<boolean | 0 | null>;
+    deleteIssue(id: number): Promise<boolean>;
 }
 declare const _default: IssueService;
 export default _default;
-//# sourceMappingURL=issue.service.d.ts.map

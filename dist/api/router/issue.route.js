@@ -1,13 +1,15 @@
-import { Router } from "express";
-import { protect, restrictToMaintainer } from "../../middleware/auth.middleware";
-import { createIssue, deleteIssue, getAllIssues, getSingleIssue, updateIssue } from "../controllers/issue.controller";
-const router = Router();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const issue_controller_1 = require("../controllers/issue.controller");
+const router = (0, express_1.Router)();
 // Public Routes
-router.get("/", getAllIssues);
-router.get("/:id", getSingleIssue);
+router.get("/", issue_controller_1.getAllIssues);
+router.get("/:id", issue_controller_1.getSingleIssue);
 // Protected Routes
-router.post("/", protect, createIssue);
-router.patch("/:id", protect, updateIssue);
-router.delete("/:id", protect, restrictToMaintainer, deleteIssue); // 
-export default router;
+router.post("/", auth_middleware_1.protect, issue_controller_1.createIssue);
+router.patch("/:id", auth_middleware_1.protect, issue_controller_1.updateIssue);
+router.delete("/:id", auth_middleware_1.protect, auth_middleware_1.restrictToMaintainer, issue_controller_1.deleteIssue); // 
+exports.default = router;
 //# sourceMappingURL=issue.route.js.map

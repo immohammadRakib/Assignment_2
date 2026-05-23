@@ -1,17 +1,22 @@
-import express, {} from "express";
-import { logger } from "./middleware/logger";
-import { globalError } from "./middleware/globalError";
-import rootRouter from "./api/router";
-const app = express();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const logger_1 = require("./middleware/logger");
+const globalError_1 = require("./middleware/globalError");
+const router_1 = __importDefault(require("./api/router"));
+const app = (0, express_1.default)();
 // Global Middlewares
-app.use(express.json());
-app.use(logger);
+app.use(express_1.default.json());
+app.use(logger_1.logger);
 // Base API Route Setup
-app.use("/api", rootRouter);
+app.use("/api", router_1.default);
 app.get('/', (req, res) => {
     res.send("Hello World");
 });
 // Global Error Handler
-app.use(globalError);
-export default app;
+app.use(globalError_1.globalError);
+exports.default = app;
 //# sourceMappingURL=app.js.map
