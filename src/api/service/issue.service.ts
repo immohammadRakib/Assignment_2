@@ -3,6 +3,7 @@ import type { Issue } from "../../types";
 
 class IssueService {
 
+  //Create Issues
   async createIssue(issueData: Partial<Issue>) {
     const { title, description, type, reporter_id } = issueData;
     
@@ -15,7 +16,7 @@ class IssueService {
     return res.rows[0];
   }
 
-  
+  //Get all Issues
   async getAllIssues(filters: { sort?: string; type?: string; status?: string }) {
     let query = `SELECT * FROM issues WHERE 1=1`;
     const queryParams: any[] = [];
@@ -69,6 +70,7 @@ class IssueService {
   }
 
 
+  // Get issues by ID
   async getIssueById(id: number) {
     const issueRes = await pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
     const issue = issueRes.rows[0];
@@ -83,7 +85,7 @@ class IssueService {
     };
   }
 
-
+// Update Issue by ID
   async updateIssue(id: number, updateData: Partial<Issue>) {
     const { title, description, type, status } = updateData;
     const query = `

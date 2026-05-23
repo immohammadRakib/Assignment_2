@@ -14,7 +14,14 @@ app.use(logger_1.logger);
 // Base API Route Setup
 app.use("/api", router_1.default);
 app.get('/', (req, res) => {
-    res.send("Hello World");
+    res.status(200).json({
+        success: true,
+        message: "Welcome to the Assignment 2 Backend API",
+        version: "1.0.0",
+        status: "Server is running smoothly",
+        author: "Md Abdur Rahman Rakib",
+        documentation: "https://github.com/immohammadRakib/Assignment_2"
+    });
 });
 // Global Error Handler
 app.use(globalError_1.globalError);

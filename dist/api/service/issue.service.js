@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = require("../../db");
 class IssueService {
+    //Create Issues
     async createIssue(issueData) {
         const { title, description, type, reporter_id } = issueData;
         const query = `
@@ -12,6 +13,7 @@ class IssueService {
         const res = await db_1.pool.query(query, [title, description, type, reporter_id]);
         return res.rows[0];
     }
+    //Get all Issues
     async getAllIssues(filters) {
         let query = `SELECT * FROM issues WHERE 1=1`;
         const queryParams = [];
@@ -51,6 +53,7 @@ class IssueService {
             };
         });
     }
+    // Get issues by ID
     async getIssueById(id) {
         const issueRes = await db_1.pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
         const issue = issueRes.rows[0];
@@ -63,6 +66,7 @@ class IssueService {
             reporter: userRes.rows[0] || null
         };
     }
+    // Update Issue by ID
     async updateIssue(id, updateData) {
         const { title, description, type, status } = updateData;
         const query = `
